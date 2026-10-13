@@ -1,1 +1,62 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dvlop AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f5f5ff;font-family:Arial,sans-serif}
+header{padding:18px 20px;border-bottom:1px solid #29304a;font-size:23px;font-weight:bold}
+header span{color:#a78bfa}
+main{max-width:760px;margin:auto;padding:22px 15px 120px}
+h1{font-size:36px;margin-top:45px}
+p{color:#adb5d0;line-height:1.6}
+#chat{display:flex;flex-direction:column;gap:14px;margin-top:25px}
+.msg{padding:14px;border-radius:15px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+.user{background:#34285b;align-self:flex-end;max-width:90%}
+.ai{background:#171e32;border:1px solid #29304a;align-self:stretch}
+form{position:fixed;bottom:0;left:0;right:0;background:#0b1020;padding:14px;display:flex;gap:8px;border-top:1px solid #29304a}
+input{min-width:0;flex:1;padding:14px;border-radius:13px;border:1px solid #3b4260;background:#171e32;color:white;font-size:16px}
+button{border:0;border-radius:13px;background:#8064f5;color:white;padding:0 19px;font-size:16px;font-weight:bold}
+small{display:block;color:#929bb8;text-align:center;padding:10px;font-size:11px}
+</style>
+</head>
+<body>
+<header>✦ <span>Dvlop</span> AI</header>
+<main>
+<h1>Welcome to <span style="color:#a78bfa">Dvlop AI</span></h1>
+<p>Your AI assistant. Ask questions, learn new things, write code and explore ideas.</p>
+<div id="chat">
+<div class="msg ai">Hello! 👋 I am Dvlop AI. Send a message to get started. Connect an AI service to enable real AI answers.</div>
+</div>
+</main>
+<form id="form">
+<input id="message" placeholder="Message Dvlop AI..." autocomplete="off" required>
+<button type="submit">Send</button>
+</form>
+<script>
+const form=document.getElementById('form');
+const input=document.getElementById('message');
+const chat=document.getElementById('chat');
+form.addEventListener('submit',function(e){
+e.preventDefault();
+const text=input.value.trim();
+if(!text)return;
+const user=document.createElement('div');
+user.className='msg user';
+user.textContent=text;
+chat.appendChild(user);
+const reply=document.createElement('div');
+reply.className='msg ai';
+reply.textContent='Your message has been received! The AI engine is not connected yet. Our next step is to connect a real AI model securely.';
+chat.appendChild(reply);
+input.value='';
+window.scrollTo(0,document.body.scrollHeight);
+});
+</script>
+<small>Dvlop AI · Early preview</small>
+</body>
+</html>
+
