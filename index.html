@@ -40,20 +40,47 @@ small{display:block;color:#929bb8;text-align:center;padding:10px;font-size:11px}
 const form=document.getElementById('form');
 const input=document.getElementById('message');
 const chat=document.getElementById('chat');
-form.addEventListener('submit',function(e){
-e.preventDefault();
-const text=input.value.trim();
-if(!text)return;
-const user=document.createElement('div');
-user.className='msg user';
-user.textContent=text;
-chat.appendChild(user);
-const reply=document.createElement('div');
-reply.className='msg ai';
-reply.textContent='Your message has been received! The AI engine is not connected yet. Our next step is to connect a real AI model securely.';
-chat.appendChild(reply);
-input.value='';
-window.scrollTo(0,document.body.scrollHeight);
+form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const text = input.value.trim();
+    if(!text) return;
+
+    // 1. यूजर का मैसेज स्क्रीन पर दिखाना
+    const user = document.createElement('div');
+    user.className = 'msg user';
+    user.textContent = text;
+    chat.appendChild(user);
+    
+    input.value = ''; // इनपुट बॉक्स खाली करना
+
+    // 2. AI के जवाब के लिए बॉक्स बनाना
+    const reply = document.createElement('div');
+    reply.className = 'msg ai';
+    reply.textContent = 'Typing...'; 
+    chat.appendChild(reply);
+    
+    window.scrollTo(0, document.body.scrollHeight);
+
+    try {
+        // 3. आपके Workers API पर रिक्वेस्ट भेजना
+        const response = await fetch('https://workers.dev', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: text }) 
+        });
+
+        const data = await response.json();
+        
+        // 4. API से आने वाले रिस्पॉन्स को स्क्रीन पर दिखाना
+        reply.textContent = data.reply || data.response || JSON.stringify(data); 
+    } catch (error) {
+        console.error("Error:", error);
+        reply.textContent = "Error: Could not connect to Dvlop AI API.";
+    }
+
+    window.scrollTo(0, document.body.scrollHeight);
 });
 </script>
 <small>Dvlop AI · Early preview</small>
